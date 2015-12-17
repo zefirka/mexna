@@ -1,0 +1,21 @@
+{
+  "name": "mexna",
+  "version": "0.0.1",
+  "description": "Yet another interpolator",
+  "main": "mexna.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.yandex-team.ru/zeffirsky/mexna"
+  },
+  "keywords": [
+    "interpolator",
+    "parser",
+    "string",
+    "mexna"
+  ],
+  "author": "Trdat Mkrtchyan <zeffirsky@yandex-team.ru>",
+  "license": "MIT"
+}
