@@ -8,14 +8,14 @@ describe('mexna', () => {
         const simpleString = 'I am a simple ${what}';
         const simpleStringWithDefault = 'I am a simple ${what || "string"}';
         const multipleString = 'I am a multiple with ${first} and ${second}';
-        const multipleStringWithDefault = 'I am a multiple ${first || "first" and ${second || "second"}';
+        const multipleStringWithDefault = 'I am a multiple ${first || "first"} and ${second || "second"}';
 
         it('with one value, no default', function() {
             mexna(simpleString, {
                 keys: {
                     what: 'string'
                 }
-            }).must.to.be('I am simple string');
+            }).must.to.be('I am a simple string');
         });
 
         it('with one value, with default and given', function() {
@@ -23,11 +23,11 @@ describe('mexna', () => {
                 keys: {
                     what: 'test'
                 }
-            }).must.to.be('I am simple test');
+            }).must.to.be('I am a simple test');
         });
 
         it('with one value, with default and empty', function() {
-            mexna(simpleStringWithDefault).must.to.be('I am simple string');
+            mexna(simpleStringWithDefault).must.to.be('I am a simple string');
         });
 
         it('with different multiple value, no default', function() {
@@ -45,11 +45,11 @@ describe('mexna', () => {
                     first: 'a',
                     second: 'b'
                 }
-            }).must.to.be('I am simple test');
+            }).must.to.be('I am a multiple a and b');
         });
 
         it('with different multiple, with default and empty', function() {
-            mexna(multipleStringWithDefault).must.to.be('I am a multiple with first and second');
+            mexna(multipleStringWithDefault).must.to.be('I am a multiple first and second');
         });        
     })
     

@@ -2,7 +2,7 @@
 
 var _ = require('lodash');
 
-module.export = mexna;
+module.exports = mexna;
 
 var DEFAULT_PRIMARY_REGEX = /\$\{(.+?)\}/g;
 var DEFAULT_SECONDARY_REGEX = /"!<(.+?)>!"/g;
@@ -19,7 +19,7 @@ function mexna(str, options) {
     var primaryRegex = _.constant(options.regex);
     //var secondaryRegex = _.constant(options.secondaryRegex);
 
-    return str.replace(primaryRegex, function (match, expression) {
+    return str.replace(primaryRegex(), function (match, expression) {
         var key = expression;
         var hasDefaultValue = false;
         var defaultValue = null;
@@ -57,7 +57,11 @@ function mexna(str, options) {
             value = options.i18n[value];
         }
 
-        return JSON.stringify(value);
+        if (typeof value !== 'string') {
+            return JSON.stringify(value);
+        } else {
+            return value;
+        }
     });
 }
 
