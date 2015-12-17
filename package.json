@@ -4,11 +4,18 @@
   "description": "Yet another interpolator",
   "main": "mexna.js",
   "scripts": {
-    "test": "test"
+    "test": "test",
+    "postinstall": "./tasks/post-install"
   },
   "repository": {
     "type": "git",
     "url": "https://github.yandex-team.ru/zeffirsky/mexna"
+  },
+  "devDependencies": {
+    "jscs": "2.0.0",
+    "jshint": "2.7.0",
+    "jshint-stylish": "0.4.0",
+    "lodash": "3.10.0"
   },
   "keywords": [
     "interpolator",
