@@ -53,4 +53,16 @@ describe('mexna', () => {
         });        
     })
     
+    describe('interpolation of types', () => {
+        const strArr = 'I am ${array || [1,2,3]}';
+        const strBool = 'I am ${boolean || false}';
+        const strArrOut = '${array || [1, 2, 3]}';
+
+        it('array out', () => {
+            mexna(strArrOut, {
+                exposeOut: true                
+            }).must.to.eql([1, 2, 3]);
+        })
+
+    })
 });

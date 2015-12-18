@@ -17,9 +17,10 @@ function mexna(str, options) {
     }, options);
 
     var primaryRegex = _.constant(options.regex);
-    //var secondaryRegex = _.constant(options.secondaryRegex);
+    // var secondaryRegex = _.constant(options.secondaryRegex);
+    var isExposeOut = false;
 
-    return str.replace(primaryRegex(), function (match, expression) {
+    var replaceValue = str.replace(primaryRegex(), function (match, expression) {
         var key = expression;
         var hasDefaultValue = false;
         var defaultValue = null;
@@ -57,14 +58,28 @@ function mexna(str, options) {
             value = options.i18n[value];
         }
 
+        if (options.exposeOut && JSON.stringify(str) === '"' + match + '"') {
+            isExposeOut = true;
+        }
+
         if (typeof value !== 'string') {
             return JSON.stringify(value);
         } else {
             return value;
         }
     });
+
+    if (isExposeOut) {
+        return JSON.parse(replaceValue);
+    } else {
+        return replaceValue;
+    }
 }
 
+// debugger;
+// var e = mexna('${a || [1, 2, 3]}', {
+//     exposeOut: true
+// });
 /*
 Usage for:
 
