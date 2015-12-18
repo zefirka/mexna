@@ -26,6 +26,7 @@ function mexna(str, options) {
         var defaultValue = null;
         var value = null;
         var keys = options.keys;
+        var useDefaultValue = false;
 
         if (_.contains(expression, '||')) {
             hasDefaultValue = true;
@@ -38,13 +39,16 @@ function mexna(str, options) {
             var defaultValueExpression = _.trim(parts.pop().trim());
             key = _.trim(parts.pop());
 
-            try {
-                defaultValue = JSON.parse(defaultValueExpression);
-                if (options.translateStrings) {
-                    defaultValue = options.i18n[defaultValue];
+            if (!options.keys[key]) {
+                useDefaultValue = true;
+                try {
+                    defaultValue = JSON.parse(defaultValueExpression);
+                    if (options.translateStrings) {
+                        defaultValue = options.i18n[defaultValue];
+                    }
+                } catch (e) {
+                    throw e;
                 }
-            } catch (e) {
-                throw e;
             }
         }
 
@@ -58,7 +62,7 @@ function mexna(str, options) {
             value = options.i18n[value];
         }
 
-        if (options.exposeOut && JSON.stringify(str) === '"' + match + '"') {
+        if (options.parse && JSON.stringify(str) === '"' + match + '"' && useDefaultValue) {
             isExposeOut = true;
         }
 
@@ -76,10 +80,6 @@ function mexna(str, options) {
     }
 }
 
-// debugger;
-// var e = mexna('${a || [1, 2, 3]}', {
-//     exposeOut: true
-// });
 /*
 Usage for:
 

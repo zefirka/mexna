@@ -58,11 +58,28 @@ describe('mexna', () => {
         const strBool = 'I am ${boolean || false}';
         const strArrOut = '${array || [1, 2, 3]}';
 
+
+
         it('array out', () => {
             mexna(strArrOut, {
-                exposeOut: true                
+                parse: true
             }).must.to.eql([1, 2, 3]);
-        })
+        });
 
-    })
+        it('array out: with value', () => {
+            mexna(strArrOut, {
+                keys: {
+                    array: 'test'
+                },
+                parse: true
+            }).must.to.eql('test');
+        });
+
+        it('array in', () => {
+            mexna(strArr, {
+                parse: true
+            }).must.to.be('I am [1,2,3]');
+        });
+
+    });
 });
