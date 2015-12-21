@@ -102,19 +102,6 @@ describe('mexna', () => {
             }).must.to.be('hello 1 and hello 0');
         });
 
-        it('should paste translations if has', () => {
-            mexna(caption, {
-                keys: {
-                    id: 1,
-                    test: 'test'
-                },
-                i18n: {
-                    test: 'mu-mu'
-                },
-                translateStrings: true
-            }).must.to.be('hello 1 and hello mu-mu');
-        });
-
         it('should expose out of string', () => {
             mexna(query, {
                 keys: {
