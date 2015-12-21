@@ -1,9 +1,8 @@
 # mexna
 
-<img src="./mexna.jpg" align="right" style='display: block; z-index: 32323; position: relative;'/>
-
 Mexna is string interpolator with simple signature: `mexna(string, [options]);`. Mexna can interpolate string and use translations, moreover you can use default values as valid JSON. Mexna can pick out data structures from strings and return parsed JSON. 
 
+<img src="./mexna.jpg" align="right" style='display: block; z-index: 32323; position: relative;'/>
 
 ## Options
 

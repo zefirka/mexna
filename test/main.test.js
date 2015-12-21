@@ -62,7 +62,7 @@ describe('mexna', () => {
 
         it('array out', () => {
             mexna(strArrOut, {
-                parse: true
+                exposeOut: true
             }).must.to.eql([1, 2, 3]);
         });
 
@@ -71,13 +71,13 @@ describe('mexna', () => {
                 keys: {
                     array: 'test'
                 },
-                parse: true
+                exposeOut: true
             }).must.to.eql('test');
         });
 
         it('array in', () => {
             mexna(strArr, {
-                parse: true
+                exposeOut: true
             }).must.to.be('I am [1,2,3]');
         });
 

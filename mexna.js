@@ -17,7 +17,6 @@ function mexna(str, options) {
     }, options);
 
     var primaryRegex = _.constant(options.regex);
-    // var secondaryRegex = _.constant(options.secondaryRegex);
     var isExposeOut = false;
 
     var replaceValue = str.replace(primaryRegex(), function (match, expression) {
@@ -62,7 +61,7 @@ function mexna(str, options) {
             value = options.i18n[value];
         }
 
-        if (options.parse && JSON.stringify(str) === '"' + match + '"' && useDefaultValue) {
+        if (options.exposeOut && JSON.stringify(str) === '"' + match + '"' && useDefaultValue) {
             isExposeOut = true;
         }
 
@@ -79,58 +78,3 @@ function mexna(str, options) {
         return replaceValue;
     }
 }
-
-/*
-Usage for:
-
-
-setTitle
-================================
-mexna(title, {
-    keys: params,
-    translateStrings: true,
-    i18n: {
-        7 days: BEM.I18N('a-statistics-links', 'd;sd;sld')
-    }
-})
-
-getDefaultCaption
-================================
-mexna(caption, {
-    keys: {
-        period: getReportLabelByPeriod
-    }
-})
-
-_replaceReportTemplate
-================================
-
-Not ready
-
-function _replaceReportTemplate(reportSettingsTemplate, reportParams) {
-    return reportSettingsTemplate.replace(/\${(.+?)}/g, (match, key) => {
-        let defaultValue = match;
-
-        if (contains(key, '||')) {
-            let keyValue = key.split('||');
-            defaultValue = keyValue.pop() || defaultValue;
-            key = keyValue.pop();
-        }
-
-        let value = reportParams[key] || defaultValue;
-
-        // если это массив, то создаем еще один плейсхолдер
-        // который реплейситься в следующем вызове
-        // суть такова:
-        // 'a,b'     -->     !<["a","b"]!>     -->     ["a","b"]
-        if (contains(value, ',')) {
-            let arrayString = value.split(',').map(i => `"${i}"`);
-            return `!<[${arrayString}]>!`;
-        } else {
-            return value;
-        }
-    }).replace(/"!<(.+?)>!"/g, (match, array) => {
-        return array;
-    });
-}
-*/
