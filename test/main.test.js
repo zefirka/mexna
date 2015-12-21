@@ -58,12 +58,10 @@ describe('mexna', () => {
         const strBool = 'I am ${boolean || false}';
         const strArrOut = '${array || [1, 2, 3]}';
 
-
-
         it('array out', () => {
             mexna(strArrOut, {
                 exposeOut: true
-            }).must.to.eql([1, 2, 3]);
+            }).must.to.eql("[1,2,3]");
         });
 
         it('array out: with value', () => {
@@ -115,6 +113,15 @@ describe('mexna', () => {
                 },
                 translateStrings: true
             }).must.to.be('hello 1 and hello mu-mu');
+        });
+
+        it('should expose out of string', () => {
+            mexna(query, {
+                keys: {
+                    'period': ['2015-11-03', '2015-12-21']
+                },
+                exposeOut: true
+            }).must.to.be('{"period":["2015-11-03","2015-12-21"]');
         });
     });
 });

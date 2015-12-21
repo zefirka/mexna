@@ -63,7 +63,10 @@ function mexna(str, options) {
             value = options.i18n[value] || value;
         }
 
-        if (options.exposeOut && JSON.stringify(str) === '"' + match + '"' && useDefaultValue) {
+        if (options.exposeOut) {
+            if (typeof value !== 'string') {
+                value = '<!' + JSON.stringify(value) + '!>';
+            }
             isExposeOut = true;
         }
 
@@ -75,7 +78,9 @@ function mexna(str, options) {
     });
 
     if (isExposeOut) {
-        return JSON.parse(replaceValue);
+        return replaceValue.replace(/"?<!(.+?)!>"?/g, function (match, key) {
+            return key;
+        });
     } else {
         return replaceValue;
     }
