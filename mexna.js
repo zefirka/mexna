@@ -46,7 +46,9 @@ function mexna(str, options) {
                         defaultValue = options.i18n[defaultValue];
                     }
                 } catch (e) {
-                    throw e;
+                    if (!/^"(.+?)"$/.test(defaultValueExpression)) {
+                        defaultValue = defaultValueExpression;
+                    }
                 }
             }
         }

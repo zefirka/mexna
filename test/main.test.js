@@ -80,6 +80,18 @@ describe('mexna', () => {
                 exposeOut: true
             }).must.to.be('I am [1,2,3]');
         });
+    });
+
+    describe('strings as defaults', () => {
+        const query = '{"period":"${period||30days}"';
+        const params = {};
+
+        it('should paste defaults', () => {
+            mexna(query, {
+                keys: params,
+                exposeOut: true
+            }).must.to.be('{"period":"30days"')
+        });
 
     });
 });

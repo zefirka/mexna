@@ -1,6 +1,6 @@
 # mexna
 
-Mexna is string interpolator with simple signature: `mexna(string, [options]);`. Mexna can interpolate string and use translations, moreover you can use default values as valid JSON. Mexna can pick out data structures from strings and return parsed JSON. 
+Mexna is string interpolator with simple signature: `mexna(string, [options]);`. Mexna can interpolate string and use translations, moreover you can use default values as valid JSON. Mexna can pick out data structures from strings and return parsed JSON. Also, you can give to `mexna` non-valid JSON as default value, then it will use that string as-is.
 
 <img src="./mexna.jpg" align="right" style='display: block; z-index: 32323; position: relative;'/>
 
