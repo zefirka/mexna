@@ -13,7 +13,8 @@ gulp
                 require: ['must/register'],
                 timeout: 3000
             }))
-            .once('error', () => {
+            .once('error', (err) => {
+                console.log('err', err);
                 process.exit(1);
             })
             .once('end', () => {

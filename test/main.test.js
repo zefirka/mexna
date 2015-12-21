@@ -82,8 +82,9 @@ describe('mexna', () => {
         });
     });
 
-    describe('strings as defaults', () => {
+    describe('strings and defaults', () => {
         const query = '{"period":"${period||30days}"';
+        const caption = 'hello ${id} and hello ${test||"trans"}';
         const params = {};
 
         it('should paste defaults', () => {
@@ -93,5 +94,27 @@ describe('mexna', () => {
             }).must.to.be('{"period":"30days"')
         });
 
+        it('should paste values if has not translations', () => {
+            mexna(caption, {
+                keys: {
+                    id: 1,
+                    test: '0'
+                },
+                translateString: true
+            }).must.to.be('hello 1 and hello 0');
+        });
+
+        it('should paste translations if has', () => {
+            mexna(caption, {
+                keys: {
+                    id: 1,
+                    test: 'test'
+                },
+                i18n: {
+                    test: 'mu-mu'
+                },
+                translateStrings: true
+            }).must.to.be('hello 1 and hello mu-mu');
+        });
     });
 });

@@ -60,7 +60,7 @@ function mexna(str, options) {
         }
 
         if (options.translateStrings && typeof value === 'string') {
-            value = options.i18n[value];
+            value = options.i18n[value] || value;
         }
 
         if (options.exposeOut && JSON.stringify(str) === '"' + match + '"' && useDefaultValue) {
