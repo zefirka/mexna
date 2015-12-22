@@ -2,7 +2,7 @@
 
 const mexna = require('../mexna');
 
-describe('mexna', () => {
+describe('main functionality', () => {
     
     describe('interpolation of strings:', () => {
         const simpleString = 'I am a simple ${what}';
@@ -10,7 +10,7 @@ describe('mexna', () => {
         const multipleString = 'I am a multiple with ${first} and ${second}';
         const multipleStringWithDefault = 'I am a multiple ${first || "first"} and ${second || "second"}';
 
-        it('with one value, no default', function() {
+        it('with one value, no default', () => {
             mexna(simpleString, {
                 keys: {
                     what: 'string'
@@ -18,7 +18,7 @@ describe('mexna', () => {
             }).must.to.be('I am a simple string');
         });
 
-        it('with one value, with default and given', function() {
+        it('with one value, with default and given', () => {
             mexna(simpleStringWithDefault, {
                 keys: {
                     what: 'test'
@@ -26,11 +26,11 @@ describe('mexna', () => {
             }).must.to.be('I am a simple test');
         });
 
-        it('with one value, with default and empty', function() {
+        it('with one value, with default and empty', () => {
             mexna(simpleStringWithDefault).must.to.be('I am a simple string');
         });
 
-        it('with different multiple value, no default', function() {
+        it('with different multiple value, no default', () => {
             mexna(multipleString, {
                 keys: {
                     first: 'first',
@@ -39,7 +39,7 @@ describe('mexna', () => {
             }).must.to.be('I am a multiple with first and second');
         });
 
-        it('with different multiple, with default and given', function() {
+        it('with different multiple, with default and given', () => {
             mexna(multipleStringWithDefault, {
                 keys: {
                     first: 'a',
@@ -48,7 +48,7 @@ describe('mexna', () => {
             }).must.to.be('I am a multiple a and b');
         });
 
-        it('with different multiple, with default and empty', function() {
+        it('with different multiple, with default and empty', () => {
             mexna(multipleStringWithDefault).must.to.be('I am a multiple first and second');
         });        
     })

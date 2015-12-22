@@ -1,12 +1,12 @@
 'use strict';
 
 var _ = require('lodash');
+var isEmpty = _.isEmpty;
 
 module.exports = mexna;
 
-var DEFAULT_PRIMARY_REGEX = /\$\{(.+?)\}/g;
-var DEFAULT_SECONDARY_REGEX = /"!<(.+?)>!"/g;
 var DELIMETER = '||';
+var REGEX = /\$\{(.+?)\}/g;
 var EXPOSE_OUT_REGEX = /"?<!(.+?)!>"?/g;
 
 /**
@@ -17,22 +17,20 @@ var EXPOSE_OUT_REGEX = /"?<!(.+?)!>"?/g;
  */
 function mexna(str, options) {
     options = _.extend({
-        regex: DEFAULT_PRIMARY_REGEX,
-        secondaryRegex: DEFAULT_SECONDARY_REGEX,
+        regex: REGEX,
         delimeter: DELIMETER,
         keys: {},
         i18n: {},
         translate: false
     }, options);
 
-    if (_.isEmpty(options.keys) && !_.isEmpty(options.i18n)) {
+    if (isEmpty(options.keys) && !isEmpty(options.i18n)) {
         options.translate = true;
     }
 
-    var primaryRegex = _.constant(options.regex);
     var isExposeOut = false;
 
-    var replaceValue = str.replace(primaryRegex(), function (match, expression) {
+    var replaceValue = str.replace(options.regex, function (match, expression) {
         var key = expression;
         var hasDefaultValue = false;
         var defaultValue = null;
@@ -59,7 +57,7 @@ function mexna(str, options) {
                         defaultValue = options.i18n[defaultValue];
                     }
                 } catch (e) {
-                    if (!/^"(.+?)"$/.test(defaultValueExpression)) {
+                    if (!_isString(defaultValueExpression)) {
                         defaultValue = defaultValueExpression;
                     }
                 }
@@ -83,11 +81,9 @@ function mexna(str, options) {
             isExposeOut = true;
         }
 
-        if (typeof value !== 'string') {
-            return JSON.stringify(value);
-        } else {
-            return value;
-        }
+        return typeof value !== 'string' ?
+            JSON.stringify(value) :
+            value;
     });
 
     return isExposeOut ?
@@ -103,4 +99,13 @@ function mexna(str, options) {
  */
 function _exposeOutReplacer(match, key) {
     return key;
+}
+
+/**
+ * @private
+ * @param {string} str
+ * @return {boolean}
+ */
+function _isString(str) {
+    return /^"(.+?)"$/.test(str);
 }

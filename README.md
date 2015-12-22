@@ -11,13 +11,13 @@ Mexna can:
  6. expose out interpolants from quotes in strings,
  7. non-valid JSON as default values will be interpolated as strings.
 
-<img src="./mexna.jpg" align="right" style='display: block; z-index: 32323; position: relative;'/>
+<img src="./mexna.jpg" align="right"/>
 <br><br><br><br><br><br><br><br><br><br>
 ## Options
 
  - `keys [Object]` - keys for interpolation, each key should be a `string`
  - `i18n [Object]` - translations keys
- - `translateStrings [Boolean]` - flag to use translations instead of value
+ - `translate [Boolean]` - flag to use translations instead of value
  - `exposeOut [Boolean]` - flag to pick up value from string and return parsed JSON ([look up](#exposing))
  - `delimeter` - string which is delimeter in interpolant's expression (`||` by default)
  - `regex` - regular expression to match. Must have **one group** containing `key` and optionaly `default` values for keys.
