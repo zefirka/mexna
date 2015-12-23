@@ -12,7 +12,7 @@ Mexna can:
  7. non-valid JSON as default values will be interpolated as strings.
 
 <img src="./mexna.jpg" align="right"/>
-<br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br>
 ## Options
 
  - `keys [Object]` - keys for interpolation, each key should be a `string`
