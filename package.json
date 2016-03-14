@@ -4,7 +4,7 @@
   "description": "Yet another interpolator",
   "main": "mexna.js",
   "scripts": {
-    "test": "test",
+    "test": "./node_modules/.bin/gulp test",
     "postinstall": "./tasks/post-install"
   },
   "repository": {

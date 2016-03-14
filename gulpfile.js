@@ -10,7 +10,7 @@ gulp
             })
             .pipe(mocha({
                 reporter: 'spec',
-                require: ['must/register'],
+                require: ['must-dist'],
                 timeout: 3000
             }))
             .once('error', (err) => {
