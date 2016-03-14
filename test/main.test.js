@@ -30,6 +30,14 @@ describe('main functionality', () => {
             mexna(simpleStringWithDefault).must.to.be('I am a simple string');
         });
 
+        it('with value as empty string, no default', () => {
+            mexna(simpleString, {
+                keys: {
+                    what: ''
+                }
+            }).must.to.be('I am a simple ');
+        });
+
         it('with different multiple value, no default', () => {
             mexna(multipleString, {
                 keys: {

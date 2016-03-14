@@ -37,6 +37,7 @@ function mexna(str, options) {
         var value = null;
         var keys = options.keys;
         var useDefaultValue = false;
+        var keyValue;
 
         if (_.contains(expression, options.delimeter)) {
             hasDefaultValue = true;
@@ -64,7 +65,8 @@ function mexna(str, options) {
             }
         }
 
-        value = keys[key] || defaultValue;
+        keyValue = keys[key];
+        value = keyValue === '' ? keyValue : (keyValue || defaultValue);
 
         if (typeof value === 'function') {
             value = value(key);
