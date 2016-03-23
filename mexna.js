@@ -66,13 +66,13 @@ function mexna(str, options) {
         }
 
         keyValue = keys[key];
-        value = keyValue === '' ? keyValue : (keyValue || defaultValue);
+        value = keyValue === '' ? keyValue : (keyValue || defaultValue || '');
 
         if (typeof value === 'function') {
             value = value(key);
         }
 
-        if (options.translate && typeof value === 'string') {
+        if (value && options.translate && typeof value === 'string') {
             value = options.i18n[value] || value;
         }
 

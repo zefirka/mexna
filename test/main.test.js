@@ -10,6 +10,18 @@ describe('main functionality', () => {
         const multipleString = 'I am a multiple with ${first} and ${second}';
         const multipleStringWithDefault = 'I am a multiple ${first || "first"} and ${second || "second"}';
 
+        it('with no value of key', () => {
+            mexna(simpleString).must.to.be('I am a simple ');
+        });
+
+        it('with value of key equals to null', () => {
+            mexna(simpleString, {
+                keys: {
+                    what: null
+                }
+            }).must.to.be('I am a simple ');
+        });
+
         it('with one value, no default', () => {
             mexna(simpleString, {
                 keys: {
