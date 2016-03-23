@@ -1,6 +1,6 @@
 {
   "name": "mexna",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Yet another interpolator",
   "main": "mexna.js",
   "scripts": {
