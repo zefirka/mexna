@@ -1,4 +1,4 @@
-# mexna
+# mexna [![Build Status](https://travis-ci.org/zefirka/mexna.svg?branch=master)](https://travis-ci.org/zefirka/mexna)
 
 Mexna is string interpolator with simple signature but pretty specific abilities. 
 Main syntax is: `mexna(string, [options])`. 
