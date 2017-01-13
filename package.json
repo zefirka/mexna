@@ -12,7 +12,7 @@
     "url": "https://github.yandex-team.ru/zeffirsky/mexna"
   },
   "dependencies": {
-    "lodash": "3.10.0"
+    "lodash": "4.17.4"
   },
   "devDependencies": {
     "gulp": "^3.9.0",

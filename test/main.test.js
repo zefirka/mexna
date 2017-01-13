@@ -3,7 +3,7 @@
 const mexna = require('../mexna');
 
 describe('main functionality', () => {
-    
+
     describe('interpolation of strings:', () => {
         const simpleString = 'I am a simple ${what}';
         const simpleStringWithDefault = 'I am a simple ${what || "string"}';
@@ -70,12 +70,11 @@ describe('main functionality', () => {
 
         it('with different multiple, with default and empty', () => {
             mexna(multipleStringWithDefault).must.to.be('I am a multiple first and second');
-        });        
+        });
     })
-    
+
     describe('interpolation of types', () => {
         const strArr = 'I am ${array || [1,2,3]}';
-        const strBool = 'I am ${boolean || false}';
         const strArrOut = '${array || [1, 2, 3]}';
 
         it('array out', () => {
