@@ -61,6 +61,11 @@ function mexna(str, options) {
             }
         }
 
+        if (options.strict && !options.keys.hasOwnProperty(key) && !defaultValue) {
+            throw new Error('Range Error: `' + key + '` is not defined. '
+              + 'Consider adding it to the `keys` option or turning off the strict mode.');
+        }
+
         keyValue = keys[key];
         value = keyValue === '' ? keyValue : (keyValue || defaultValue || '');
 

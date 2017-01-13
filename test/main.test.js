@@ -130,4 +130,20 @@ describe('main functionality', () => {
             }).must.to.be('{"period":["2015-11-03","2015-12-21"]');
         });
     });
+
+    describe('strict mode', () => {
+        it('should throw an exception for the undefined key', () => {
+            (() => mexna('${missing_key}', {
+                keys: {},
+                strict: true
+            })).must.throw(Error, /^Range Error: `missing_key`/);
+        });
+
+        it('shouldn\'t throw an exception for the undefined key with default value', () => {
+            mexna('${missing_key || "yo"}', {
+              keys: {},
+              strict: true
+            }).must.to.be('yo');
+        });
+    });
 });
