@@ -1,6 +1,7 @@
 'use strict';
 
 var _ = require('lodash');
+var includes = _.includes;
 var isEmpty = _.isEmpty;
 
 module.exports = mexna;
@@ -32,16 +33,12 @@ function mexna(str, options) {
 
     var replaceValue = str.replace(options.regex, function (match, expression) {
         var key = expression;
-        var hasDefaultValue = false;
         var defaultValue = null;
         var value = null;
         var keys = options.keys;
-        var useDefaultValue = false;
         var keyValue;
 
-        if (_.contains(expression, options.delimeter)) {
-            hasDefaultValue = true;
-
+        if (includes(expression, options.delimeter)) {
             var parts = expression.split(options.delimeter);
             if (parts.length !== 2) {
                 throw new Error('Syntax Error: ' + expression + ' has no valid default value');
@@ -51,7 +48,6 @@ function mexna(str, options) {
             key = _.trim(parts.pop());
 
             if (options.keys[key] === undefined) {
-                useDefaultValue = true;
                 try {
                     defaultValue = JSON.parse(defaultValueExpression);
                     if (options.translate) {
@@ -63,6 +59,11 @@ function mexna(str, options) {
                     }
                 }
             }
+        }
+
+        if (options.strict && !options.keys.hasOwnProperty(key) && !defaultValue) {
+            throw new Error('Range Error: `' + key + '` is not defined. '
+              + 'Consider adding it to the `keys` option or turning off the strict mode.');
         }
 
         keyValue = keys[key];
@@ -96,7 +97,7 @@ function mexna(str, options) {
 /**
  * @private
  * @param {string} match
- * @param {key} match
+ * @param {key}    key
  * @return {string}
  */
 function _exposeOutReplacer(match, key) {

@@ -1,7 +1,7 @@
 # mexna [![Build Status](https://travis-ci.org/zefirka/mexna.svg?branch=master)](https://travis-ci.org/zefirka/mexna)
 
-Mexna is string interpolator with simple signature but pretty specific abilities. 
-Main syntax is: `mexna(string, [options])`. 
+Mexna is string interpolator with simple signature but pretty specific abilities.
+Main syntax is: `mexna(string, [options])`.
 Mexna can:
  1. interpolate into string data in case of simple object with keys to interpolate,
  2. use translations instead of values of keys as is,
@@ -23,8 +23,10 @@ Mexna can:
  - `exposeOut [Boolean]` - flag to pick up value from string and return parsed JSON ([look up](#exposing))
  - `delimeter` - string which is delimeter in interpolant's expression (`||` by default)
  - `regex` - regular expression to match. Must have **one group** containing `key` and optionaly `default` values for keys.
+ - `strict` - throws exceptions for unknown keys in the strict mode. Defaults `false`.
 
-## Usage 
+
+## Usage
 
 #### Simple string interpolation
 You can give your own regex to match interpolants with `regex` option. By default it equals to `/${(.+?)}/g`, which matches to expressions kinda `${thisIs}`:
@@ -58,7 +60,7 @@ mexna('А вот и ${a}, и ${b}', {
 
 // -> А вот и первый, и второй
 ```
- 
+
 or just put empty `keys` and use default values for interpolants:
 
 
