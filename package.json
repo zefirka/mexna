@@ -5,8 +5,11 @@
   "main": "mexna.js",
   "scripts": {
     "test": "mocha --reporter spec --require must-dist --timeout 3000 test/*.test.js",
-    "postinstall": "./tasks/post-install"
+    "pre-commit": "./tasks/pre-commit"
   },
+  "pre-commit": [
+    "test"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.yandex-team.ru/zeffirsky/mexna"
@@ -19,7 +22,8 @@
     "jshint": "2.7.0",
     "jshint-stylish": "0.4.0",
     "mocha": "^3.2.0",
-    "must-dist": "^0.12.0"
+    "must-dist": "^0.12.0",
+    "pre-commit": "^1.2.2"
   },
   "keywords": [
     "interpolator",
