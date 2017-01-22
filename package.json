@@ -8,7 +8,7 @@
     "pre-commit": "./tasks/pre-commit"
   },
   "pre-commit": [
-    "test"
+    "test", "pre-commit"
   ],
   "repository": {
     "type": "git",
