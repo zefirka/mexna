@@ -1,97 +1,107 @@
-'use strict';
+import {includes, isEmpty, extend, trim} from 'lodash'
 
-var _ = require('lodash');
-var includes = _.includes;
-var isEmpty = _.isEmpty;
-
-module.exports = mexna;
-
-var DELIMETER = '||';
-var REGEX = /\$\{(.+?)\}/g;
-var EXPOSE_OUT_REGEX = /"?<!(.+?)!>"?/g;
+const DELIMETER = '||'
+const REGEX = /\${(.+?)}/g
+const EXPOSE_OUT_REGEX = /"?<!(.+?)!>"?/g
+const TERNARY_REGEX = /(.+)\s*\?\s*(.+)\s*:\s*(.+)/g
 
 /**
  * @public
- * @param {string} str
+ * @param {string} defaultStr
  * @param {object} options
  * @return {string}
  */
-function mexna(str, options) {
-    options = _.extend({
+export default function mexna(defaultStr, opt) {
+    const options = extend({
         regex: REGEX,
         delimeter: DELIMETER,
+        ternaryRegex: TERNARY_REGEX,
         keys: {},
         i18n: {},
         translate: false
-    }, options);
+    }, opt)
 
     if (isEmpty(options.keys) && !isEmpty(options.i18n)) {
-        options.translate = true;
+        options.translate = true
     }
 
-    var isExposeOut = false;
+    let isExposeOut = false
 
-    var replaceValue = str.replace(options.regex, function (match, expression) {
-        var key = expression;
-        var defaultValue = null;
-        var value = null;
-        var keys = options.keys;
-        var keyValue;
+    const strReplace = (str) => {
+        return str.replace(options.regex, function (match, expression) {
+            const {keys} = options
+            let key = expression
+            let defaultValue
+            let value
 
-        if (includes(expression, options.delimeter)) {
-            var parts = expression.split(options.delimeter);
-            if (parts.length !== 2) {
-                throw new Error('Syntax Error: ' + expression + ' has no valid default value');
+            if (options.ternaryRegex.test(str)) {
+                const prop = key.split('?')[0].trim()
+                let [expandable, nonExpandable] = key.split('?')[1].split(':')
+                expandable = expandable.replace('#(', '${').replace(')#', '}')
+
+                if (!options.keys[prop]) {
+                    return nonExpandable
+                } else {
+                    return strReplace(expandable)
+                }
             }
 
-            var defaultValueExpression = _.trim(parts.pop().trim());
-            key = _.trim(parts.pop());
+            if (includes(expression, options.delimeter)) {
+                const parts = expression.split(options.delimeter)
+                if (parts.length !== 2) {
+                    throw new Error('Syntax Error: ' + expression + ' has no valid default value')
+                }
 
-            if (options.keys[key] === undefined) {
-                try {
-                    defaultValue = JSON.parse(defaultValueExpression);
-                    if (options.translate) {
-                        defaultValue = options.i18n[defaultValue];
-                    }
-                } catch (e) {
-                    if (!_isString(defaultValueExpression)) {
-                        defaultValue = defaultValueExpression;
+                const defaultValueExpression = trim(parts.pop().trim())
+                key = trim(parts.pop())
+
+                if (options.keys[key] === undefined) {
+                    try {
+                        defaultValue = JSON.parse(defaultValueExpression)
+                        if (options.translate) {
+                            defaultValue = options.i18n[defaultValue]
+                        }
+                    } catch (e) {
+                        if (!_isString(defaultValueExpression)) {
+                            defaultValue = defaultValueExpression
+                        }
                     }
                 }
             }
-        }
 
-        if (options.strict && !options.keys.hasOwnProperty(key) && !defaultValue) {
-            throw new Error('Range Error: `' + key + '` is not defined. '
-              + 'Consider adding it to the `keys` option or turning off the strict mode.');
-        }
-
-        keyValue = keys[key];
-        value = keyValue === '' ? keyValue : (keyValue || defaultValue || '');
-
-        if (typeof value === 'function') {
-            value = value(key);
-        }
-
-        if (value && options.translate && typeof value === 'string') {
-            value = options.i18n[value] || value;
-        }
-
-        if (options.exposeOut) {
-            if (typeof value !== 'string') {
-                value = '<!' + JSON.stringify(value) + '!>';
+            if (options.strict && !options.keys.hasOwnProperty(key) && !defaultValue) {
+                throw new Error('Range Error: `' + key + '` is not defined. '
+                    + 'Consider adding it to the `keys` option or turning off the strict mode.')
             }
-            isExposeOut = true;
-        }
 
-        return typeof value !== 'string' ?
-            JSON.stringify(value) :
-            value;
-    });
+            const keyValue = keys[key]
+            value = keyValue === '' ? keyValue : (keyValue || defaultValue || '')
 
+            if (typeof value === 'function') {
+                value = value(key)
+            }
+
+            if (value && options.translate && typeof value === 'string') {
+                value = options.i18n[value] || value
+            }
+
+            if (options.exposeOut) {
+                if (typeof value !== 'string') {
+                    value = '<!' + JSON.stringify(value) + '!>'
+                }
+                isExposeOut = true
+            }
+
+            return typeof value !== 'string' ?
+                JSON.stringify(value) :
+                value
+        })
+    }
+
+    const replaceValue = strReplace(defaultStr)
     return isExposeOut ?
         replaceValue.replace(EXPOSE_OUT_REGEX, _exposeOutReplacer) :
-        replaceValue;
+        replaceValue
 }
 
 /**
@@ -101,7 +111,7 @@ function mexna(str, options) {
  * @return {string}
  */
 function _exposeOutReplacer(match, key) {
-    return key;
+    return key
 }
 
 /**
@@ -110,5 +120,5 @@ function _exposeOutReplacer(match, key) {
  * @return {boolean}
  */
 function _isString(str) {
-    return /^"(.+?)"$/.test(str);
+    return /^"(.+?)"$/.test(str)
 }
