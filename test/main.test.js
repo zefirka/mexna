@@ -9,8 +9,8 @@ describe('main functionality', () => {
         const simpleStringWithDefault = 'I am a simple ${what || "string"}';
         const multipleString = 'I am a multiple with ${first} and ${second}';
         const multipleStringWithDefault = 'I am a multiple ${first || "first"} and ${second || "second"}';
-        const ternaryString = 'I am a ternary ${string ? #(string)# : string}';
-        const ternaryMultipleString = 'I am a multiple ternary ${first ? #(first)# : first} and ${second ? #(second)# : second}';
+        const ternaryString = 'I am a ternary ${string ? #(string)# : default}';
+        const ternaryMultipleString = 'I am a multiple ternary ${first ? #(first)# : firstDefault} and ${second ? #(second)# : secondDefault}';
 
         it('with no value of key', () => {
             mexna(simpleString).must.to.be('I am a simple ');
@@ -78,26 +78,26 @@ describe('main functionality', () => {
             it('with value', () => {
                 mexna(ternaryString, {
                     keys: {
-                        string: 'string'
+                        string: 'str'
                     }
-                }).must.to.be('I am a ternary string')
+                }).must.to.be('I am a ternary str')
             });
 
             it('without value, with default', () => {
-                mexna(ternaryString).must.to.be('I am a ternary string')
+                mexna(ternaryString).must.to.be('I am a ternary default')
             });
 
             it('with different multiple, with default and given', () => {
                 mexna(ternaryMultipleString, {
                     keys: {
-                        first: 'first',
-                        second: 'second'
+                        first: 'F',
+                        second: 'S'
                     }
-                }).must.to.be('I am a multiple ternary first and second');
+                }).must.to.be('I am a multiple ternary F and S');
             });
 
             it('with different multiple, with default and without given', () => {
-                mexna(ternaryMultipleString).must.to.be('I am a multiple ternary first and second');
+                mexna(ternaryMultipleString).must.to.be('I am a multiple ternary firstDefault and secondDefault');
             });
         });
     });

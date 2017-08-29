@@ -22,9 +22,9 @@ Mexna can:
  - `translate [Boolean]` - flag to use translations instead of value
  - `exposeOut [Boolean]` - flag to pick up value from string and return parsed JSON ([look up](#exposing))
  - `delimeter` - string which is delimeter in interpolant's expression (`||` by default)
- - `regex` - regular expression to match. Must have **one group** containing `key` and optionaly `default` values for keys.
- - `strict` - throws exceptions for unknown keys in the strict mode. Defaults `false`.
-
+ - `regex` - regular expression to match. Must have **one group** containing `key` and optionaly `default` values for keys
+ - `strict` - throws exceptions for unknown keys in the strict mode. Defaults `false`
+ - `ternaryRegex` - regex to match ternaty expressions in string
 
 ## Usage
 
@@ -133,4 +133,22 @@ mexna('{"period": "${preset || ["2015-12-01", "2015-12-02"]}"}', {
 });
 
 // -> {"period": ["2015-12-01","2015-12-02"]}
+```
+
+### Ternatry expressions
+
+In v0.2.* mexna support ternary expressions in strings:
+
+```js
+mexna('I am a ternary ${string ? #(string)# : default}', {
+    keys: {
+        string: 'str'
+    }
+})
+
+// -> 'I am a ternary str'
+
+mexna('I am a ternary ${string ? #(string)# : default}')
+
+// -> 'I am a ternary default'
 ```
