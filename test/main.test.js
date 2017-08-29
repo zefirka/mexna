@@ -9,6 +9,8 @@ describe('main functionality', () => {
         const simpleStringWithDefault = 'I am a simple ${what || "string"}';
         const multipleString = 'I am a multiple with ${first} and ${second}';
         const multipleStringWithDefault = 'I am a multiple ${first || "first"} and ${second || "second"}';
+        const ternaryString = 'I am a ternary ${string ? #(string)# : string}';
+        const ternaryMultipleString = 'I am a multiple ternary ${first ? #(first)# : first} and ${second ? #(second)# : second}';
 
         it('with no value of key', () => {
             mexna(simpleString).must.to.be('I am a simple ');
@@ -71,7 +73,34 @@ describe('main functionality', () => {
         it('with different multiple, with default and empty', () => {
             mexna(multipleStringWithDefault).must.to.be('I am a multiple first and second');
         });
-    })
+
+        describe('ternary strings:', () => {
+            it('with value', () => {
+                mexna(ternaryString, {
+                    keys: {
+                        string: 'string'
+                    }
+                }).must.to.be('I am a ternary string')
+            });
+
+            it('without value, with default', () => {
+                mexna(ternaryString).must.to.be('I am a ternary string')
+            });
+
+            it('with different multiple, with default and given', () => {
+                mexna(ternaryMultipleString, {
+                    keys: {
+                        first: 'first',
+                        second: 'second'
+                    }
+                }).must.to.be('I am a multiple ternary first and second');
+            });
+
+            it('with different multiple, with default and without given', () => {
+                mexna(ternaryMultipleString).must.to.be('I am a multiple ternary first and second');
+            });
+        });
+    });
 
     describe('interpolation of types', () => {
         const strArr = 'I am ${array || [1,2,3]}';
